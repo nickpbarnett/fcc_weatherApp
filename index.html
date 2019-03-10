@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Nick's Weather App</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+		<link rel= "stylesheet" type= "text/css" href= "./css/style.css">
+		
+		<script>
+
+			$(document).ready(function() {
+			    if (navigator.geolocation)
+			    {
+			        navigator.geolocation.getCurrentPosition(successFunction);
+			    }
+			    else 
+			    {
+			        alert('It seems like Geolocation, which is required for this page, is not enabled in your browser.');
+			    }       
+			});
+
+			function successFunction(position) 
+			{
+			    var lat = position.coords.latitude;
+			    var long = position.coords.longitude;
+			    //alert('Your latitude is :'+lat+' and longitude is '+long);
+			    
+			    
+			
+          		ep="https://fcc-weather-api.glitch.me/api/current?lat="+lat+"&lon="+long;
+
+	          	$.getJSON(ep, function(data) {
+	          		$("#location").html(data.name+", "+data.sys.country);
+	          		$("#overview").html(data.weather[0].main);
+	            	$("#description").html("Description: "+data.weather[0].description);
+	            	$("#pic").attr("src",data.weather[0].icon);
+	            	var degC=Math.floor(data.main.temp);
+	            	var degF=(degC*9/5)+32;
+	            	$("#tempC").html("Temperature: "+degC+"C");  
+	            	$("#tempF").html("Temperature: "+degF+"F");
+	            	
+	            	
+	            	if (data.weather[0].id==500){
+	            		$("#comment").html("Light rain. You might need an umbrella!");
+	            		//$('#pic').css("background-image", "url(/images/rain1.jpg)");
+	            	}else if(data.weather[0].id==501){
+	            		$("#comment").html("Moderate rain. You'll need an umbrella!");
+	            	}else if(data.weather[0].id==502){
+	            		$("#comment").html("Heavy rain. It's time to dig your waterproofs out!");
+	            	}else if(data.weather[0].id==503){
+	            		$("#comment").html("Very heavy rain. I'd stay indoors if I was you!");
+	            	}else if(data.weather[0].id==504){
+	            		$("#comment").html("Extreme rain. Get the ark ready!");
+	            	}else if(data.weather[0].id==511){
+	            		$("#comment").html("Freezing rain. Wrap up warm!");
+	            	}else if(data.weather[0].id==521){
+	            		$("#comment").html("Light showers. Don't forget your pac-a-mac!");
+	            	}else if(data.weather[0].id==522){
+	            		$("#comment").html("Heavy showers. You're going to get wet if you step outside!");
+	            	}else if(data.weather[0].id==531){
+	            		$("#comment").html("Ragged showers. WTF does that mean?");
+
+	            	}else if(data.weather[0].id==600){
+	            		$("#comment").html("Light snow. Time to buy some salt?");
+	            	}else if(data.weather[0].id==601){
+	            		$("#comment").html("Snow. Careful with those snowballs!");
+	            	}else if(data.weather[0].id==602){
+	            		$("#comment").html("Heavy snow. Get your shovel ready!");
+	            	}else if(data.weather[0].id==611){
+	            		$("#comment").html("Sleet. Don't you just hate it?");
+	            	}else if(data.weather[0].id==612){
+	            		$("#comment").html("Sleet. Don't you just hate it?");
+	            	}else if(data.weather[0].id==615){
+	            		$("#comment").html("Light rain and snow. FFS!");
+	            	}else if(data.weather[0].id==620){
+	            		$("#comment").html("Rain and snow. Lovely!");
+	            	}else if(data.weather[0].id==621){
+	            		$("#comment").html("Snow shower. Wrap up warm and don't forget your gloves!");
+	            	}else if(data.weather[0].id==622){
+	            		$("#comment").html("Heavy snow shower. Could be a snow day!");
+	            		
+	            	}else if(data.weather[0].id==801){
+	            		$("#comment").html("There might be a few clouds around.");
+	            	}else if(data.weather[0].id==802){
+	            		$("#comment").html("Scattered clouds.");
+	            	}else if(data.weather[0].id==803){
+	            		$("#comment").html("Broken clouds. I suppose it could be worse.");
+	            	}else if(data.weather[0].id==804){
+	            		$("#comment").html("Overcast and cloudy! ");
+	            		
+	            	}else if(data.weather[0].id==900){
+	            		$("#comment").html("Tornado!!!!!");
+	            	}else if(data.weather[0].id==901){
+	            		$("#comment").html("Tropical storm. Stay inside.");
+	            	}else if(data.weather[0].id==902){
+	            		$("#comment").html("Hurricane. Take cover.");
+	            	}else if(data.weather[0].id==903){
+	            		$("#comment").html("Cold. Wrap up well if you're going outside.");
+	            	}else if(data.weather[0].id==904){
+	            		$("#comment").html("Hot. Lovely!");
+	            	}else if(data.weather[0].id==905){
+	            		$("#comment").html("Windy. Get your kite out.");
+	            	}else if(data.weather[0].id==906){
+	            		$("#comment").html("Hail. Ouch, that stuff hurts!");
+	            		
+	            	}else if(data.weather[0].id==951){
+	            		$("#comment").html("Nice and calm.");
+	            	}else if(data.weather[0].id==952){
+	            		$("#comment").html("Light breeze. Nothing much to worry about.");
+	            	}else if(data.weather[0].id==953){
+	            		$("#comment").html("Gentle breeze. ");
+	            	}else if(data.weather[0].id==954){
+	            		$("#comment").html("Moderate breeze. ");
+	            	}else if(data.weather[0].id==955){
+	            		$("#comment").html("Fresh breeze.");
+	            	}else if(data.weather[0].id==956){
+	            		$("#comment").html("Strong breeze. Hold on to your hat!");
+	            	}else if(data.weather[0].id==957){
+	            		$("#comment").html("High wind, near gale. Take care out there! ");
+	            	}else if(data.weather[0].id==958){
+	            		$("#comment").html("Gale. 34–47 knots of sustained surface winds. ");
+	            	}else if(data.weather[0].id==959){
+	            		$("#comment").html("Severe gale. Be careful.");
+	            	}else if(data.weather[0].id==960){
+	            		$("#comment").html("Storm. I'd stay in if I were you!");
+	            	}else if(data.weather[0].id==961){
+	            		$("#comment").html("Violent storm. Take care out there!");
+	            	}else if(data.weather[0].id==962){
+	            		$("#comment").html("Hurricane!!!!!!!!!!!!");
+	            		
+	            	}else if(data.weather[0].id==701){
+	            		$("#comment").html("Mist, mist and more mist.");
+	            	}else if(data.weather[0].id==711){
+	            		$("#comment").html("Smoke? There's a fire somewhere.");
+	            	}else if(data.weather[0].id==721){
+	            		$("#comment").html("Haze. Visibility is not at its best. ");
+	            	}else if(data.weather[0].id==731){
+	            		$("#comment").html("Sand and dust swirls!");
+	            	}else if(data.weather[0].id==741){
+	            		$("#comment").html("Fog. Visibility is not at its best.");
+	            	}else if(data.weather[0].id==751){
+	            		$("#comment").html("Sand.");
+	            	}else if(data.weather[0].id==751){
+	            		$("#comment").html("Dust.");
+	            	}else if(data.weather[0].id==762){
+	            		$("#comment").html("Volcanic ash!");
+	            	}else if(data.weather[0].id==771){
+	            		$("#comment").html("Squalls");
+	            	}else if(data.weather[0].id==781){
+	            		$("#comment").html("Tornado. Look out Dorothy!");
+	            		
+	            	}else if(data.weather[0].id==200){
+	            		$("#comment").html("Thunderstorm with a bit of light rain.");
+	            	}else if(data.weather[0].id==201){
+	            		$("#comment").html("Thunderstorm and rain. Not looking good.");
+	            	}else if(data.weather[0].id==202){
+	            		$("#comment").html("Thunderstorm with heavy rain. I'd stay indoors if I was you!");
+	            	}else if(data.weather[0].id==210){
+	            		$("#comment").html("Light thunderstorm.");
+	            	}else if(data.weather[0].id==211){
+	            		$("#comment").html("Thunderstorm. Watch out for lightening!");
+	            	}else if(data.weather[0].id==212){
+	            		$("#comment").html("Heavy thunderstorm. Take cover!");
+	            	}else if(data.weather[0].id==221){
+	            		$("#comment").html("Ragged thunderstorm. WTF?");
+	            	}else if(data.weather[0].id==230){
+	            		$("#comment").html("Thunderstorm with light drizzle.");
+	            	}else if(data.weather[0].id==231){
+	            		$("#comment").html("Thunderstorm with drizzle. ");
+	            	}else if(data.weather[0].id==232){
+	            		$("#comment").html("Thunderstorm with heavy drizzle.");
+	            		
+	            	}else if(data.weather[0].id==300){
+	            		$("#comment").html("Light drizzle. Nothing to worry too much about. ");
+	            	}else if(data.weather[0].id==301){
+	            		$("#comment").html("Drizzle. Don't forget your pac-a-mac!");
+	            	}else if(data.weather[0].id==302){
+	            		$("#comment").html("Heavy drizzle. Got a brolly?");
+	            	}else if(data.weather[0].id==310){
+	            		$("#comment").html("Light drizzle / rain.");
+	            	}else if(data.weather[0].id==311){
+	            		$("#comment").html("Drizzle / rain. Don't forget your pac-a-mac! ");
+	            	}else if(data.weather[0].id==312){
+	            		$("#comment").html("Heavy drizzle/rain. Stay indoors and watch some TV.");
+	            	}else if(data.weather[0].id==313){
+	            		$("#comment").html("Showers and drizzle. ");
+	            	}else if(data.weather[0].id==314){
+	            		$("#comment").html("Heavy showers / drizzle. ");
+	            	}else if(data.weather[0].id==321){
+	            		$("#comment").html("Showers / drizzle.");
+
+	            	}else{
+	            		$("#comment").html(" ");
+	            	};
+	            	
+	            	
+	          	});
+		    }
+
+
+	    	function unitToggle() {
+			    var c = document.getElementById("tempC");
+			    var f = document.getElementById("tempF");
+			    if (c.style.display === "none") {
+			        c.style.display = "block";
+			        f.style.display = "none";
+			    } else {
+			        c.style.display = "none";
+			        f.style.display = "block";
+			    }
+			}
+
+		</script>
+	</head>
+	<body>
+		<div class="container text-center">
+		
+		<div class="jumbotron">
+			
+		<div>
+			<h1>Nick's Weather App</h1>
+			<h2 id="error"></h2>
+			<h2 id="location"></h2>
+			<p id="overview"></p>
+			<!-- <p id="description"></p> -->
+			<p id="comment"></p>
+			<img id="pic" src="">
+			<p id="tempC"></p>
+			<p id="tempF" style="display:none"></p>
+			<button onclick="unitToggle()" class="btn btn-success">change temp units</button>
+		</div>
+
+		</div> <!-- end .jumbotron -->
+		</div> <!-- end .container -->
+	</body>
+</html>
